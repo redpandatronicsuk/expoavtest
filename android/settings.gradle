@@ -1,4 +1,6 @@
 apply from: '../node_modules/react-native-unimodules/gradle.groovy'
+include ':react-native-music-control'
+project(':react-native-music-control').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-music-control/android')
 includeUnimodulesProjects()
 
 rootProject.name = 'avtest'
