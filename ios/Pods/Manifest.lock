@@ -2,7 +2,7 @@ PODS:
   - boost-for-react-native (1.63.0)
   - DoubleConversion (1.1.6)
   - EXAppLoaderProvider (5.0.0)
-  - EXAV (5.0.0):
+  - EXAV (5.0.2):
     - UMCore
     - UMPermissionsInterface
   - EXConstants (5.0.0):
