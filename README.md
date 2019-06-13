@@ -7,3 +7,6 @@ To test the workaround for `expo-av` in file `node_modules/expo-av/ios/EXAV/EXAV
 
 ## Updates:
 Now added also `react-native-sound` as a working example, to hopefully make it easier to find the bug in `expo-av` or `react-native-music-control`.
+
+### Better workaround:
+See comments ~line 819 in `node_modules/expo-av/ios/EXAV/EXAVPlayerData.m`
