@@ -10,6 +10,7 @@
         "react": "16.8.3",
         "react-native": "0.59.8",
         "react-native-music-control": "^0.10.4",
+        "react-native-sound": "^0.10.12",
         "react-native-unimodules": "0.4.0"
     },
     "devDependencies": {

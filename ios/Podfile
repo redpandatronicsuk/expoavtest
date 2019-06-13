@@ -31,6 +31,8 @@ target 'avtest' do
 
   pod 'react-native-music-control', :path => '../node_modules/react-native-music-control'
 
+  pod 'RNSound', :path => '../node_modules/react-native-sound'
+
   target 'avtestTests' do
     inherit! :search_paths
   end

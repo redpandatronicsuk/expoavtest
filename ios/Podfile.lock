@@ -76,6 +76,11 @@ PODS:
     - React/Core
     - React/fishhook
     - React/RCTBlob
+  - RNSound (0.10.12):
+    - React/Core
+    - RNSound/Core (= 0.10.12)
+  - RNSound/Core (0.10.12):
+    - React/Core
   - UMBarCodeScannerInterface (2.0.0)
   - UMCameraInterface (2.0.0)
   - UMConstantsInterface (2.0.0)
@@ -117,6 +122,7 @@ DEPENDENCIES:
   - React/RCTText (from `../node_modules/react-native`)
   - React/RCTVibration (from `../node_modules/react-native`)
   - React/RCTWebSocket (from `../node_modules/react-native`)
+  - RNSound (from `../node_modules/react-native-sound`)
   - UMBarCodeScannerInterface (from `../node_modules/unimodules-barcode-scanner-interface/ios`)
   - UMCameraInterface (from `../node_modules/unimodules-camera-interface/ios`)
   - UMConstantsInterface (from `../node_modules/unimodules-constants-interface/ios`)
@@ -161,6 +167,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native"
   react-native-music-control:
     :path: "../node_modules/react-native-music-control"
+  RNSound:
+    :path: "../node_modules/react-native-sound"
   UMBarCodeScannerInterface:
     :path: !ruby/object:Pathname
     path: "../node_modules/unimodules-barcode-scanner-interface/ios"
@@ -212,6 +220,7 @@ SPEC CHECKSUMS:
   glog: aefd1eb5dda2ab95ba0938556f34b98e2da3a60d
   React: 1d605e098d69bdf08960787f3446f0a9dc2e2ccf
   react-native-music-control: e397f7b8bdd39fc19288ef393e4016b433604b42
+  RNSound: b360b3862d3118ed1c74bb9825696b5957686ac4
   UMBarCodeScannerInterface: f623227f2f6e8fa5c45fef1cc2b5ae200dd14918
   UMCameraInterface: 2a22ae5a2d4f710d617e3fd2c5c0511019aea1c7
   UMConstantsInterface: 9884d2a4a4563b20d7efbafba421151698dd8991
@@ -226,6 +235,6 @@ SPEC CHECKSUMS:
   UMTaskManagerInterface: c594f1584e28026f98cca344d10183f635896094
   yoga: 128daf064cacaede0c3bb27424b6b4c71052e6cd
 
-PODFILE CHECKSUM: 67e766dc44937f64da0283179e8cd7451c63eb6f
+PODFILE CHECKSUM: da3eb83c5732bbecbe2f9f0cacb2f01776fb54c5
 
 COCOAPODS: 1.5.3

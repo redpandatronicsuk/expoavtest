@@ -4,22 +4,21 @@ import React, { Component } from 'react'
 import { Audio } from 'expo-av'
 import MusicControl from 'react-native-music-control'
 
+// var Sound = require('react-native-sound')
+import Sound from 'react-native-sound'
+
 const demoAudio = require('./assets/demo.mp3')
 
 export default class App extends Component {
 
   state = {
     isAudioReady: false,
-    isAudioPlaying: false
+    isAudioPlaying: false,
+    initialisedWith: null
   }
   soundObj = null
 
-  componentDidMount = async () => {
-    await this.setupAudio()
-    this.setupLockScreenControls()
-  }
-
-  setupAudio = async () => {
+  setupAudioExpo = async () => {
     await Audio.setIsEnabledAsync(true)
     await Audio.setAudioModeAsync({
       allowsRecordingIOS: true,
@@ -29,7 +28,7 @@ export default class App extends Component {
       shouldDuckAndroid: true,
       interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
       playThroughEarpieceAndroid: false,
-      staysActiveInBackground: true // Ignored on iOS 😭
+      staysActiveInBackground: true
     })
     this.soundObj = await Audio.Sound.createAsync(
       demoAudio,
@@ -43,7 +42,15 @@ export default class App extends Component {
       }
     )
     this.setupLockScreenControls(this.soundObj.status.durationMillis * .001)
-    this.setState({ isAudioReady: true })
+    this.setState({ isAudioReady: true, initialisedWith: 'expo-av' })
+  }
+
+  setupAudioRNSound = () => {
+    Sound.setCategory('Playback')
+    this.soundObj = new Sound(demoAudio, () => {
+      this.setupLockScreenControls(Math.abs(this.soundObj.getDuration()))
+      this.setState({ isAudioReady: true, initialisedWith: 'react-native-sound' })
+    })
   }
 
   setupLockScreenControls = duration => {
@@ -98,12 +105,37 @@ export default class App extends Component {
   }
 
   play = async () => {
-    await this.soundObj.sound.playAsync()
+    const { initialisedWith } = this.state
+    if (initialisedWith === 'expo-av') {
+      await this.soundObj.sound.playAsync()
+    } else {
+      this.soundObj.play()
+      this.soundObj.getCurrentTime(seconds => {
+        MusicControl.updatePlayback({
+          state: MusicControl.STATE_PLAYING,
+          elapsedTime: seconds
+        })
+      })
+    }
     this.setState({ isAudioPlaying: true })
   }
 
   pause = async () => {
-    await this.soundObj.sound.pauseAsync()
+    const { initialisedWith } = this.state
+    if (initialisedWith === 'expo-av') {
+      await this.soundObj.sound.pauseAsync()
+    } else {
+      this.soundObj.pause()
+      this.soundObj.getCurrentTime(seconds => {
+        MusicControl.updatePlayback({
+          state: MusicControl.STATE_PAUSED,
+          elapsedTime: seconds
+        })
+      })
+    }
+    MusicControl.updatePlayback({
+      state: MusicControl.STATE_PAUSED
+    })
     this.setState({ isAudioPlaying: false })
   }
 
@@ -114,10 +146,17 @@ export default class App extends Component {
       {
         isAudioReady ?
         <TouchableOpacity onPress={this.togglePlayPause}>
-          <Text>{ isAudioPlaying ? 'PAUSE' : 'PLAY' }</Text>
+              <Text style={styles.buttonText}>{ isAudioPlaying ? 'PAUSE' : 'PLAY' }</Text>
         </TouchableOpacity>
         :
-        <ActivityIndicator />
+        <View>
+          <TouchableOpacity onPress={this.setupAudioExpo}>
+                <Text style={styles.buttonText}>Initialise with expo-av</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.setupAudioRNSound}>
+                <Text style={styles.buttonText}>Initialise with react-native-sound</Text>
+          </TouchableOpacity>
+        </View>
       }
       </View>
     );
@@ -131,14 +170,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  welcome: {
-    fontSize: 20,
+  buttonText: {
+    padding: 10,
     textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+    fontSize: 20
+  }
 });
