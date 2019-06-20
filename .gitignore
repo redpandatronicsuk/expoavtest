@@ -32,8 +32,11 @@ local.properties
 
 # node.js
 #
+!node_modules/
 node_modules/*
-!node_modules/expo-av
+!node_modules/expo-av/
+
+
 npm-debug.log
 yarn-error.log
 
